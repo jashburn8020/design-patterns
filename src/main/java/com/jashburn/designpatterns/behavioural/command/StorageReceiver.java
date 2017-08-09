@@ -4,7 +4,7 @@ import java.util.Random;
 
 class StorageReceiver implements Receiver {
 
-	Random random;
+	private Random random;
 
 	StorageReceiver() {
 		random = new Random(System.currentTimeMillis());
