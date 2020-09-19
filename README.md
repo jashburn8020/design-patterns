@@ -24,6 +24,16 @@ Python:
 - [`ocp_comply.py`](python/src/ocp/ocp_comply.py)
 - [`ocp_test.py`](python/src/ocp/ocp_test.py)
 
+## Liskov Substitution Principle (LSP)
+
+Subtypes must be substitutable for their base types.
+
+### LSP Examples
+
+Python:
+
+- [`lsp_test.py`](python/src/lsp/lsp_test.py)
+
 ## Sources
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
