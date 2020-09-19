@@ -34,6 +34,18 @@ Python:
 
 - [`lsp_test.py`](python/src/lsp/lsp_test.py)
 
+## Interface Segregation Principle (ISP)
+
+Clients should not be forced to depend on methods that they do not use.
+
+### ISP Examples
+
+Python:
+
+- [`isp_violate.py`](python/src/isp/isp_violate.py)
+- [`isp_comply.py`](python/src/isp/isp_comply.py)
+- [`isp_test.py`](python/src/isp/isp_test.py)
+
 ## Sources
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
