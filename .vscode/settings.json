@@ -1,4 +1,9 @@
 {
   "python.envFile": "${workspaceFolder}/.env",
-  "python.autoComplete.extraPaths": ["${workspaceFolder}/python/src/**"]
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/python/src/**"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/jashburn/devel/sandbox/design-patterns/python/src"
+  ]
 }

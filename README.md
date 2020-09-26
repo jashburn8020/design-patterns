@@ -46,6 +46,18 @@ Python:
 - [`isp_comply.py`](python/src/isp/isp_comply.py)
 - [`isp_test.py`](python/src/isp/isp_test.py)
 
+## Dependency Inversion Principle (DIP)
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions.
+
+### DIP Examples
+
+Python:
+
+- [`dip_violate.py`](python/src/dip/dip_violate.py)
+- [`dip_comply.py`](python/src/dip/dip_comply.py)
+- [`dip_test.py`](python/src/dip/dip_test.py)
+
 ## Sources
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
