@@ -58,6 +58,27 @@ Python:
 - [`dip_comply.py`](python/src/dip/dip_comply.py)
 - [`dip_test.py`](python/src/dip/dip_test.py)
 
+## Builder
+
+- When piecewise object construction is complicated, provide an API for doing it succinctly
+- Motivation
+  - some objects are simple and can be created in a single initialiser call
+  - other objects require a lot of ceremony to create
+  - having an object with 10 initialiser arguments is not productive
+    - instead, opt of piecewise construction
+  - Builder provides an API for constructing an object step-by-step
+
+### Builder Examples
+
+Python:
+
+- [`builder.py`](python/src/builder/builder.py)
+- [`builder_test.py`](python/src/builder/builder_test.py)
+- [`builder_facets.py`](python/src/builder/builder_facets.py)
+- [`builder_facets_test.py`](python/src/builder/builder_facets_test.py)
+- [`builder_inheritance.py`](python/src/builder/builder_inheritance.py)
+- [`builder_inheritance_test.py`](python/src/builder/builder_inheritance_test.py)
+
 ## Sources
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
