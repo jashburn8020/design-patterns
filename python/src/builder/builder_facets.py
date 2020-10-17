@@ -30,7 +30,7 @@ class PersonBuilder:
     """
 
     def __init__(self, person: Optional[Person] = None) -> None:
-        """Create a `PersonBuilder` with`person` as a starting template if provided."""
+        """Create a `PersonBuilder` with `person` as a starting template if provided."""
         if person is None:
             self.person = Person()
         else:

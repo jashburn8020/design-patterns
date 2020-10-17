@@ -15,6 +15,8 @@
     - [Builder Examples](#builder-examples)
   - [Factory](#factory)
     - [Factory Examples](#factory-examples)
+  - [Prototype](#prototype)
+    - [Prototype Examples](#prototype-examples)
   - [Sources](#sources)
 
 ## Single Responsibility Principle (SRP)
@@ -121,6 +123,22 @@ Python:
 - [`factory_test.py`](python/src/factory/factory_test.py)
 - [`abstract_factory.py`](python/src/factory/abstract_factory.py)
 - [`abstract_factory_test.py`](python/src/factory/abstract_factory_test.py)
+
+## Prototype
+
+- Motivation
+  - when it's easier to copy an existing object to fully initialise a new one
+- Prototype - a partially or fully initialised object that you copy (clone) and make use of
+- We make a copy (clone) of the prototype and customise it
+  - requires ['deep copy'](https://docs.python.org/3/library/copy.html#copy.deepcopy) support
+- We make cloning convenient (e.g., via a Factory)
+
+### Prototype Examples
+
+Python:
+
+- [`prototype_test.py`](python/src/prototype/prototype_test.py)
+- [`prototype_factory_test.py`](python/src/prototype/prototype_factory_test.py)
 
 ## Sources
 
