@@ -1,5 +1,22 @@
 # Design Principles and Patterns
 
+- [Design Principles and Patterns](#design-principles-and-patterns)
+  - [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
+    - [SRP Examples](#srp-examples)
+  - [Open-Closed Principle (OCP)](#open-closed-principle-ocp)
+    - [OCP Examples](#ocp-examples)
+  - [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
+    - [LSP Examples](#lsp-examples)
+  - [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
+    - [ISP Examples](#isp-examples)
+  - [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+    - [DIP Examples](#dip-examples)
+  - [Builder](#builder)
+    - [Builder Examples](#builder-examples)
+  - [Factory](#factory)
+    - [Factory Examples](#factory-examples)
+  - [Sources](#sources)
+
 ## Single Responsibility Principle (SRP)
 
 A class should have only 1 reason to change. Responsibility implies a reason for change.
@@ -78,6 +95,32 @@ Python:
 - [`builder_facets_test.py`](python/src/builder/builder_facets_test.py)
 - [`builder_inheritance.py`](python/src/builder/builder_inheritance.py)
 - [`builder_inheritance_test.py`](python/src/builder/builder_inheritance_test.py)
+
+## Factory
+
+- Motivation
+  - object creation logic becomes too convoluted
+  - initialiser is not descriptive
+    - cannot overload with the same sets of arguments with different names
+    - can turn into 'optional parameter hell'
+- Wholesale object creation (not piecewise like Builder) can be outsourced to:
+  - a separate method (Factory Method)
+    - a static method that creates objects
+  - a separate class (Factory)
+    - any entity that can take care of object creation
+  - a hierarchy of factories (Abstract Factory)
+    - correspond to a hierarchy of types
+
+### Factory Examples
+
+Python:
+
+- [`factory_method.py`](python/src/factory/factory_method.py)
+- [`factory_method_test.py`](python/src/factory/factory_method_test.py)
+- [`factory.py`](python/src/factory/factory.py)
+- [`factory_test.py`](python/src/factory/factory_test.py)
+- [`abstract_factory.py`](python/src/factory/abstract_factory.py)
+- [`abstract_factory_test.py`](python/src/factory/abstract_factory_test.py)
 
 ## Sources
 
