@@ -17,6 +17,8 @@
     - [Factory Examples](#factory-examples)
   - [Prototype](#prototype)
     - [Prototype Examples](#prototype-examples)
+  - [Singleton](#singleton)
+    - [Singleton Examples](#singleton-examples)
   - [Sources](#sources)
 
 ## Single Responsibility Principle (SRP)
@@ -139,6 +141,28 @@ Python:
 
 - [`prototype_test.py`](python/src/prototype/prototype_test.py)
 - [`prototype_factory_test.py`](python/src/prototype/prototype_factory_test.py)
+
+## Singleton
+
+- A component that is instantiated only once
+- Motivation
+  - for some components it only makes sense to have one in the system
+    - database repository
+    - object factory
+  - the initialiser call is expensive
+  - object represents a resource and there is only one instance of the resource
+- Provide everyone with the same instance
+  - prevent anyone creating additional copies
+- Lazy instantiation
+  - initialise only when someone actually asks for it
+
+### Singleton Examples
+
+Python:
+
+- [`singleton_decorator_test.py`](python/src/singleton/singleton_decorator_test.py)
+- [`singleton_metaclass_test.py`](python/src/singleton/singleton_metaclass_test.py)
+- [`monostate_test.py`](python/src/singleton/monostate_test.py)
 
 ## Sources
 
