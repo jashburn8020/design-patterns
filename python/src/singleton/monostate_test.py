@@ -5,10 +5,8 @@ static variable and at the same time you allow people to create new objects. All
 instances will have the same state.
 """
 
-# all members are static :)
 
-
-from typing import Any, ClassVar, Dict, Tuple
+from typing import Any, ClassVar, Dict
 
 
 class CEO:

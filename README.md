@@ -164,6 +164,16 @@ Python:
 - [`singleton_metaclass_test.py`](python/src/singleton/singleton_metaclass_test.py)
 - [`monostate_test.py`](python/src/singleton/monostate_test.py)
 
+## Adapter
+
+- Adapt the interface you are given to the interface that you actually need
+
+### Adapter Examples
+
+Python:
+
+- [`adapter_test.py`](python/src/adapter/adapter_test.py)
+
 ## Sources
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
