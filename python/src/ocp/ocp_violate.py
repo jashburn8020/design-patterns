@@ -3,21 +3,9 @@
 Example based on https://www.udemy.com/course/design-patterns-python/.
 """
 
-from enum import Enum
 from typing import Generator, Iterable
 
-Colour = Enum("Colour", "RED GREEN BLUE")
-Size = Enum("Size", "SMALL MEDIUM LARGE")
-
-
-class Product:
-    """Generic product."""
-
-    def __init__(self, name: str, colour: Colour, size: Size):
-        """Create a product of a certain colour and size."""
-        self.name = name
-        self.colour = colour
-        self.size = size
+from ocp.ocp_common import Colour, Product, Size
 
 
 class ProductFilter:

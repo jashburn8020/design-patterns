@@ -2,26 +2,16 @@
 
 Example based on https://www.udemy.com/course/design-patterns-python/.
 """
-from enum import Enum
+from abc import ABC, abstractmethod
 from typing import Any, Callable, Generator, Iterable
 
-Colour = Enum("Colour", "RED GREEN BLUE")
-Size = Enum("Size", "SMALL MEDIUM LARGE")
+from ocp.ocp_common import Colour, Product, Size
 
 
-class Product:
-    """Generic product."""
-
-    def __init__(self, name: str, colour: Colour, size: Size):
-        """Create a product of a certain colour and size."""
-        self.name = name
-        self.colour = colour
-        self.size = size
-
-
-class Specification:
+class Specification(ABC):
     """Base class to determine if an item is satisfied by a particular criterion."""
 
+    @abstractmethod
     def is_satisfied(self, item: Any) -> bool:
         """Return `True` if `item` meets this specification."""
 
@@ -63,7 +53,7 @@ class AndSpec(Specification):
 
     def is_satisfied(self, item: Product) -> bool:
         """Return `True` if `item` meets all the specifications."""
-        return all(map(lambda spec: spec.is_satisfied(item), self.specs))
+        return all(spec.is_satisfied(item) for spec in self.specs)
 
 
 class DynamicSpec(Specification):
@@ -78,9 +68,10 @@ class DynamicSpec(Specification):
         return self.satisfied(item)
 
 
-class Filter:
+class Filter(ABC):
     """Base class to filter items by some specification."""
 
+    @abstractmethod
     def filter(
         self, items: Iterable[Any], spec: Specification
     ) -> Generator[Any, None, None]:
