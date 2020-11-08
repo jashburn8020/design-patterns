@@ -19,6 +19,10 @@
     - [Prototype Examples](#prototype-examples)
   - [Singleton](#singleton)
     - [Singleton Examples](#singleton-examples)
+  - [Adapter](#adapter)
+    - [Adapter Examples](#adapter-examples)
+  - [Bridge](#bridge)
+    - [Bridge Examples](#bridge-examples)
   - [Sources](#sources)
 
 ## Single Responsibility Principle (SRP)
@@ -173,6 +177,25 @@ Python:
 Python:
 
 - [`adapter_test.py`](python/src/adapter/adapter_test.py)
+
+## Bridge
+
+- Connecting components together through abstraction
+- Prevents a 'Cartesian product' complexity explosion
+  - example:
+    - base class: ThreadScheduler
+    - can be preemptive or cooperative
+    - can run on Windows or Unix
+    - 2x2 scenario: WindowsPTS, UnixPTS, Windows CTS, UnixCTS
+- A mechanism that decouples an interface/abstraction from the implementation
+  - both can be hierarchies but they don't have to engage in one big inheritance relationship
+  - you can have some inheritance and also some aggregation or just keeping references to other components
+
+### Bridge Examples
+
+Python:
+
+- [`bridge_test.py`](python/src/bridge/bridge_test.py)
 
 ## Sources
 
