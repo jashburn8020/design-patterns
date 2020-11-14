@@ -23,6 +23,17 @@
     - [Adapter Examples](#adapter-examples)
   - [Bridge](#bridge)
     - [Bridge Examples](#bridge-examples)
+  - [Composite](#composite)
+    - [Intent](#intent)
+    - [Motivation](#motivation)
+    - [Applicability](#applicability)
+    - [Structure](#structure)
+    - [Participants](#participants)
+    - [Collaborations](#collaborations)
+    - [Consequences](#consequences)
+    - [Implementation](#implementation)
+    - [Related Patterns](#related-patterns)
+    - [Examples](#examples)
   - [Sources](#sources)
 
 ## Single Responsibility Principle (SRP)
@@ -197,6 +208,125 @@ Python:
 
 - [`bridge_test.py`](python/src/bridge/bridge_test.py)
 
+## Composite
+
+### Intent
+
+- Compose objects into tree structures to represent part-whole hierarchies
+- _Composite_ lets clients treat individual objects and compositions of objects uniformly
+
+### Motivation
+
+- Some applications let users build complex entities out of simple components
+  - the user can group components to form larger components, which in turn can be grouped to form even larger components
+- A simple implementation could define classes for the primitives (simple components) plus other classes that act as containers for these primitives
+  - the problem is client code that uses these classes must treat primitive and container objects differently, even if most of the time the user treats them identically
+  - makes the application more complex
+- The _Composite_ pattern describes how to use recursive composition so that clients don't have to make this distinction
+- The key to the _Composite_ pattern is an abstract class that represents both primitives and their containers
+  - declares operations that are specific to the primitives
+  - declares operations that all composite/container objects share, such as operations for accessing and managing its children
+- Primitive objects have no child components, so they don't implement child-related operations
+- A container object defines an aggregate of primitive objects
+  - implements primitive objects' operations to call the corresponding operations of its children
+  - implements child-related operations
+  - can compose other container objects recursively
+
+### Applicability
+
+- Use when
+  - you want to represent part-whole hierarchies of objects
+  - you want clients to be able to ignore the difference between compositions of objects and individual objects; clients will treat all objects in the composite structure uniformly
+
+### Structure
+
+![Composite pattern class diagram](images/composite-structure.png)
+
+### Participants
+
+- **Component**
+  - declares the interface for objects in the composition
+  - implements default behaviour for the interface common to all classes, as appropriate
+  - declares an interface for accessing and managing its child components
+  - (optional) defines an interface for accessing a component's parent in the recursive structure, and implements it if that's appropriate
+- **Leaf**
+  - represents leaf objects in the composition
+  - has no children
+  - defines behaviour for primitive objects in the composition
+- **Composite**
+  - defines behaviour for components having children
+  - stores child components
+  - implements child-related operations in the Component interface
+- **Client**
+  - manipulates objects in the composition through the Component interface
+
+### Collaborations
+
+- Clients use the Component class interface to interact with objects in the composite structure
+- If the recipient is a Leaf, then the request is handled directly
+- If the recipient is a Composite, then it usually forwards requests to its child components, possibly performing additional operations before and/or after forwarding
+
+### Consequences
+
+- Defines class hierarchies consisting of primitive objects and composite objects
+- Makes the client simple
+  - clients can treat composite structures and individual objects uniformly
+- Makes it easier to add new kinds of components
+  - clients don't have to be changed for new Component classes
+- Can make your design overly general
+  - sometimes you want a composite to have only certain components
+  - you can't rely on the type system to enforce those constraints for you
+  - you'll have to use run-time checks
+
+### Implementation
+
+- **Explicit parent references**
+  - maintaining references from child components to their parent can simplify the traversal and management of a composite structure
+  - the usual place to define the parent reference is in the Component class
+  - Leaf and Composite classes can inherit the reference and the operations that manage it
+  - essential to maintain the invariant that all children of a composite have as their parent the composite that in turn has them as children
+    - can be implemented once in the `add` and `remove` operations of the Composite class, then it can be inherited by all the subclasses
+- **Sharing components**
+  - it's often useful to share components, for example, to reduce storage requirements
+  - but when a component can have no more than one parent, sharing components becomes difficult
+  - the _Flyweight_ pattern shows how to rework a design to avoid storing parents altogether
+    - works in cases where children can avoid sending parent requests by externalising some or all of their state
+- **Maximising the Component interface**
+  - in order to make clients unaware of the specific Leaf or Composite classes they're using, the Component class should define as many common operations for Composite and Leaf classes as possible
+  - sometimes conflict with the principle of class hierarchy design that says a class should only define operations that are meaningful to its subclasses
+  - the interface for accessing children is a fundamental part of a Composite class but not necessarily Leaf classes
+- **Declaring the child management operations**
+  - an important issue in the _Composite_ pattern is which classes declare these operations in the _Composite_ class hierarchy
+  - the decision involves a trade-off between _safety_ and _transparency_:
+    - defining the child management interface at the root of the class hierarchy gives you transparency, because you can treat all components uniformly
+      - it costs you safety because clients may try to do meaningless things like add and remove objects from leaves
+    - defining child management in the Composite class gives you safety, but you lose transparency because leaves and composites have different interfaces
+  - we emphasise transparency over safety in this pattern
+    - define default `add` and `remove` operations in Component
+    - usually it's better to make `add` and `remove` fail by default (perhaps by raising an exception) if the component isn't allowed to have children or if the argument of `remove` isn't a child of the component, respectively
+- **Should Component implement a list of Components?**
+  - putting the child pointer in the Component class incurs a space penalty for every leaf, even though a leaf never has children
+- **Caching to improve performance**
+  - if you need to traverse or search compositions frequently, the Composite class can cache traversal or search information about its children
+  - changes to a component will require invalidating the caches of its parents
+    - works best when components know their parents
+    - define an interface for telling composites that their caches are invalid
+
+### Related Patterns
+
+- Often the component-parent link is used for a _Chain of Responsibility_
+- _Decorator_ is often used with _Composite_
+- _Flyweight_ lets you share components, but they can no longer refer to their parents
+- _Iterator_ can be used to traverse composites
+- _Visitor_ localises operations and behaviour that would otherwise be distributed across Composite and Leaf classes
+
+### Examples
+
+Python:
+
+- [`composite_shapes_test.py`](python/src/composite/composite_shapes_test.py)
+
 ## Sources
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
+- Johnson, Ralph, et al. "Design Patterns CD: Elements of Reusable Object-oriented Software." United Kingdom, Addison-Wesley, 1998.
