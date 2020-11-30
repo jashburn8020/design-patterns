@@ -6,6 +6,8 @@ One way to draw them is by having VectorCircle, VectorSquare, VectorRectangle,
 RasterCircle, RasterSquare, and RasterRectangle.
 
 Instead, split the concepts into shapes and renderers.
+
+Based on example in "Design Patterns in Python for Engineers, Designers, and Architects"
 """
 
 
@@ -17,7 +19,7 @@ from pytest_mock import MockerFixture
 
 
 class Renderer(ABC):
-    """Shape renderer base class."""
+    """Implementor: shape renderer base class."""
 
     @abstractmethod
     def render_circle(self, radius: int) -> None:
@@ -35,7 +37,7 @@ class Renderer(ABC):
 
 
 class VectorRenderer(Renderer):
-    """Shape renderer in vector form."""
+    """ConcreteImplementor: shape renderer in vector form."""
 
     def render_circle(self, radius: int) -> None:
         """Render a circle in vector form."""
@@ -51,7 +53,7 @@ class VectorRenderer(Renderer):
 
 
 class RasterRenderer(Renderer):
-    """Shape renderer in raster form."""
+    """ConcreteImplementor: shape renderer in raster form."""
 
     def render_circle(self, radius: int) -> None:
         """Render a circle in raster form."""
@@ -67,7 +69,7 @@ class RasterRenderer(Renderer):
 
 
 class Shape(ABC):
-    """Shape base class."""
+    """Abstraction: shape base class."""
 
     def __init__(self, renderer: Renderer):
         self.renderer = renderer
@@ -82,7 +84,7 @@ class Shape(ABC):
 
 
 class Circle(Shape):
-    """A circular shape."""
+    """RefinedAbstraction: a circular shape."""
 
     def __init__(self, renderer: Renderer, radius: int):
         super().__init__(renderer)
@@ -98,7 +100,7 @@ class Circle(Shape):
 
 
 class Square(Shape):
-    """A square shape."""
+    """RefinedAbstraction: a square shape."""
 
     def __init__(self, renderer: Renderer, side: int):
         super().__init__(renderer)
@@ -114,7 +116,7 @@ class Square(Shape):
 
 
 class Rectangle(Shape):
-    """A rectangular shape."""
+    """RefinedAbstraction: a rectangular shape."""
 
     def __init__(self, renderer: Renderer, horiz_side: int, vert_side: int):
         super().__init__(renderer)

@@ -22,8 +22,6 @@
   - [Adapter](#adapter)
     - [Adapter Examples](#adapter-examples)
   - [Bridge](#bridge)
-    - [Bridge Examples](#bridge-examples)
-  - [Composite](#composite)
     - [Intent](#intent)
     - [Motivation](#motivation)
     - [Applicability](#applicability)
@@ -33,6 +31,17 @@
     - [Consequences](#consequences)
     - [Implementation](#implementation)
     - [Related Patterns](#related-patterns)
+    - [Bridge Examples](#bridge-examples)
+  - [Composite](#composite)
+    - [Intent](#intent-1)
+    - [Motivation](#motivation-1)
+    - [Applicability](#applicability-1)
+    - [Structure](#structure-1)
+    - [Participants](#participants-1)
+    - [Collaborations](#collaborations-1)
+    - [Consequences](#consequences-1)
+    - [Implementation](#implementation-1)
+    - [Related Patterns](#related-patterns-1)
     - [Examples](#examples)
   - [Sources](#sources)
 
@@ -191,22 +200,108 @@ Python:
 
 ## Bridge
 
-- Connecting components together through abstraction
-- Prevents a 'Cartesian product' complexity explosion
-  - example:
-    - base class: ThreadScheduler
-    - can be preemptive or cooperative
-    - can run on Windows or Unix
-    - 2x2 scenario: WindowsPTS, UnixPTS, Windows CTS, UnixCTS
-- A mechanism that decouples an interface/abstraction from the implementation
-  - both can be hierarchies but they don't have to engage in one big inheritance relationship
-  - you can have some inheritance and also some aggregation or just keeping references to other components
+### Intent
+
+- Decouple an abstraction from its implementation so that the two can vary independently
+
+### Motivation
+
+- Complex elements in a system can sometimes vary in both their external functionality and their underlying
+  implementation
+  - in such cases, inheritance is an undesirable solution
+    - the number of classes you must create increases as a function of both these aspects
+    - 2 representations and implementations yield 4 classes to develop
+    - 3 representations and implementations result in 9 classes
+- Inheritance ties a component into a static model, making it difficult to change in the future
+- It would be preferable to create a dynamic way to vary both aspects of the component on an as-needed basis
+- _Bridge_ solves the problem by decoupling the 2 aspects of the component
+  - 2 separate inheritance chains
+    - one devoted to functionality (abstraction)
+    - the other to implementation
+  - it's much easier to mix and match elements from each side
+- The coding requirements for _Bridge_ give you an overall savings in the number of classes written as you increase the number of variations
+- We refer to the relationship as a bridge, because it bridges the abstraction and its implementation, letting them vary independently
+
+### Applicability
+
+- You want to avoid a permanent binding between an abstraction and its implementation
+  - when the implementation must be selected or switched at run-time
+- Both the abstractions and their implementations should be extensible by subclassing
+  - the Bridge pattern lets you combine the different abstractions and implementations and extend them independently
+- Changes in the implementation of an abstraction should have no impact on clients
+- You want to hide the implementation of an abstraction completely from clients
+- You have a proliferation of classes
+  - such a class hierarchy indicates the need for splitting an object into two parts
+
+### Structure
+
+![Bridge pattern class diagram](images/bridge-pattern.png)
+
+### Participants
+
+- **Abstraction**
+  - defines the abstraction's interface
+  - maintains a reference to an object of type Implementor
+- **RefinedAbstraction**
+  - extends the interface defined by Abstraction.
+- **Implementor**
+  - defines the interface for implementation classes
+  - doesn't have to correspond exactly to Abstraction's interface - the two interfaces can be quite different
+  - typically the Implementor interface provides only primitive operations, and Abstraction defines higher-level operations based on these primitives
+- **ConcreteImplementor**
+  - implements the Implementor interface and defines its concrete implementation
+
+### Collaborations
+
+- Abstraction forwards client requests to its Implementor object
+
+### Consequences
+
+- Decoupling interface and implementation
+  - an implementation is not bound permanently to an interface
+    - the implementation of an abstraction can be configured at run-time
+    - it's possible for an object to change its implementation at run-time
+  - eliminates compile-time dependencies on the implementation
+    - changing an implementation class doesn't require recompiling the Abstraction class and its clients
+  - encourages layering that can lead to a better-structured system
+    - the high-level part of a system only has to know about Abstraction and Implementor
+- Improved extensibility
+  - you can extend the Abstraction and Implementor hierarchies independently
+
+### Implementation
+
+Consider the following implementation issues when applying the _Bridge_ pattern:
+
+- **Only one Implementor**
+  - in situations where there's only one implementation - a degenerate case of the Bridge pattern - creating an abstract Implementor class isn't necessary
+  - this separation is still useful when a change in the implementation of a class must not affect its existing clients
+- **Creating the right Implementor object**
+  - how, when, and where do you decide which Implementor class to instantiate when there's more than one?
+  - if Abstraction knows about all ConcreteImplementor classes, then it can instantiate one of them in its constructor
+  - another approach is to choose a default implementation initially and change it later according to usage
+  - it's also possible to delegate the decision to another object altogether
+    - we can introduce a factory object (see [_Abstract Factory_](#factory))
+    - the factory knows what kind of object to create
+    - a benefit of this approach is that Abstraction is not coupled directly to any of the Implementor classes
+- **Using multiple inheritance**
+  - you can use multiple inheritance to combine an interface with its implementation
+  - e.g., a class can inherit publicly from Abstraction and privately from a ConcreteImplementor
+  - this approach relies on static inheritance - it binds an implementation permanently to its interface
+    - you can't implement a true Bridge with multiple inheritance
+
+### Related Patterns
+
+- An _Abstract Factory_ can create and configure a particular _Bridge_
+- The _Adapter_ pattern is geared toward making unrelated classes work together
+  - it is usually applied to systems after they're designed
+  - _Bridge_, on the other hand, is used up-front in a design to let abstractions and implementations vary independently
 
 ### Bridge Examples
 
 Python:
 
 - [`bridge_test.py`](python/src/bridge/bridge_test.py)
+- [`bridge_todo_list_test.py`](python/src/bridge/bridge_todo_list_test.py)
 
 ## Composite
 
@@ -234,9 +329,8 @@ Python:
 
 ### Applicability
 
-- Use when
-  - you want to represent part-whole hierarchies of objects
-  - you want clients to be able to ignore the difference between compositions of objects and individual objects; clients will treat all objects in the composite structure uniformly
+- You want to represent part-whole hierarchies of objects
+- You want clients to be able to ignore the difference between compositions of objects and individual objects; clients will treat all objects in the composite structure uniformly
 
 ### Structure
 
@@ -330,3 +424,4 @@ Python:
 
 - Nesteruk, Dmitri. "Design Patterns in Python for Engineers, Designers, and Architects." _Udemy_, Udemy, Inc., Aug. 2020, [www.udemy.com/course/design-patterns-python/](https://www.udemy.com/course/design-patterns-python/).
 - Johnson, Ralph, et al. "Design Patterns CD: Elements of Reusable Object-oriented Software." United Kingdom, Addison-Wesley, 1998.
+- Stelting, Stephen, and Olav Maassen. "Applied Java Patterns." Prentice Hall PTR, 2001.
